@@ -1,6 +1,10 @@
 plugins {
-    kotlin("jvm") version "2.3.20"
-    kotlin("plugin.serialization") version "2.3.20"
+    kotlin("jvm") version "2.3.21"
+    kotlin("plugin.serialization") version "2.3.21"
+    id("org.jetbrains.dokka") version "2.2.0"
+    id("org.hildan.kotlin-publish") version "1.7.0"
+    id("ru.vyarus.github-info") version "2.0.0"
+    `maven-publish`
 }
 
 group = "dev.fruxz"
@@ -36,4 +40,45 @@ kotlin {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// publishing
+
+github {
+    user = "TheFruxz"
+    license = "LGPLv3"
+}
+
+publishing {
+
+    repositories {
+        mavenLocal()
+        maven("https://nexus.fruxz.dev/repository/releases/") {
+            name = "fruxz.dev"
+            credentials {
+                username = System.getenv("FXZ_NEXUS_USER")
+                password = System.getenv("FXZ_NEXUS_SECRET")
+            }
+        }
+
+    }
+
+}
+
+dokka {
+    moduleName.set("FlaremailKt")
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+    }
+    dokkaSourceSets.main {
+        //includes.from("README.md")
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://github.com/TheFruxz/flaremail-kt/tree/master/src/main/kotlin")
+        }
+    }
+    pluginsConfiguration.html {
+        homepageLink.set("https://fxz.koeln/")
+        footerMessage.set("FlaremailKt - by Fruxz")
+    }
 }
