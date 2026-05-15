@@ -1,4 +1,4 @@
-package dev.fruxz.flaremail
+package dev.fruxz.flaremail.email
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
