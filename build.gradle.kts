@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm") version "2.3.21"
     kotlin("plugin.serialization") version "2.3.21"
-    id("org.jetbrains.dokka") version "2.2.0"
     id("org.hildan.kotlin-publish") version "1.7.0"
     id("ru.vyarus.github-info") version "2.0.0"
     `maven-publish`
@@ -63,22 +62,4 @@ publishing {
 
     }
 
-}
-
-dokka {
-    moduleName.set("FlaremailKt")
-    dokkaPublications.html {
-        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
-    }
-    dokkaSourceSets.main {
-        //includes.from("README.md")
-        sourceLink {
-            localDirectory.set(file("src/main/kotlin"))
-            remoteUrl("https://github.com/TheFruxz/flaremail-kt/tree/master/src/main/kotlin")
-        }
-    }
-    pluginsConfiguration.html {
-        homepageLink.set("https://fxz.koeln/")
-        footerMessage.set("FlaremailKt - by Fruxz")
-    }
 }
